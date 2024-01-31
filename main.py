@@ -23,10 +23,13 @@ class Map(QMainWindow):
 
     def get_map(self):
         response = requests.get(server, params=par)
-        map_file = "map.png"
-        with open(map_file, "wb") as file:
+        self.map_file = "map.png"
+        with open(self.map_file, "wb") as file:
             file.write(response.content)
-        return QPixmap(map_file).scaled(600, 600)
+        return QPixmap(self.map_file).scaled(600, 600)
+
+    def closeEvent(self, event):
+        os.remove(self.map_file)
 
 
 if __name__ == '__main__':
